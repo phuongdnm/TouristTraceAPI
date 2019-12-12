@@ -2,9 +2,11 @@ const {
   create,
   updateInfoById,
   getClients,
-  getClientByClientId
+  getClientByClientId,
+  getClientByUsername
 } = require('./user.service');
-const { genSaltSync, hashSync } = require('bcrypt');
+const { genSaltSync, hashSync, compareSync } = require('bcrypt');
+const { sign } = require('jsonwebtoken');
 
 const createUser = (req, res) => {
   const body = req.body;
@@ -64,7 +66,7 @@ const getAllClients = (req, res) => {
 
 const getOneClient = (req, res) => {
   const id = req.params.id;
-  
+
   getClientByClientId(id, (err, results) => {
     if (err) {
       console.log(err);
@@ -82,9 +84,43 @@ const getOneClient = (req, res) => {
     });
   });
 };
+
+const logIn = (req, res) => {
+  const body = req.body;
+  getClientByUsername(body.username, (err, results) => {
+    if (err) {
+      console.log(err);
+    }
+    if (!results) {
+      return res.status(401).json({
+        success: false,
+        data: 'Invalid email or password!'
+      });
+    }
+    const checkResult = compareSync(body.password, results.password);
+    if (checkResult) {
+      results.password = undefined;
+      const jsontoken = sign({ result: results }, 'qwe1234', {
+        expiresIn: '1h'
+      });
+      return res.status(200).json({
+        success: true,
+        message: 'Login successfully!',
+        token: jsontoken
+      });
+    } else {
+      return res.status(401).json({
+        success: false,
+        data: 'Your password is not correct!'
+      });
+    }
+  });
+};
+
 module.exports = {
   createUser,
   updateUserInfo,
   getAllClients,
-  getOneClient
+  getOneClient,
+  logIn
 };

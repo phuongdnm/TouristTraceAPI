@@ -54,5 +54,17 @@ module.exports = {
         return callBack(null, results[0]);
       }
     );
+  },
+  getClientByUsername: (username, callBack) => {
+    pool.query(
+      `SELECT * FROM registration WHERE username=?`,
+      [username],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results[0]);
+      }
+    );
   }
 };
