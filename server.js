@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 
 const app  = express();
@@ -9,6 +11,7 @@ app.get('/api', (req, res) => {
   })
 })
 
-app.listen(8080, () => {
-  console.log('Server is running on port 8080');
+const port = process.env.PORT | 8080;
+app.listen(port, () => {
+  console.log('Server is running on port ', port);
 })
