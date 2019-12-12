@@ -8,7 +8,7 @@ CREATE TABLE registration(
 );
 
 CREATE TABLE clients(
-  client_id INT NOT NULL,
+  client_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   firstName VARCHAR(20) NOT NULL,
   lastName VARCHAR(20) NOT NULL,
   birthday DATETIME,
