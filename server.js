@@ -1,15 +1,12 @@
 require('dotenv').config();
 
 const express = require('express');
+const userRouter = require('./api/users/user.router');
 
 const app  = express();
+app.use(express.json());
 
-app.get('/api', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'API is working!'
-  })
-})
+app.use('/api/users', userRouter);
 
 const port = process.env.PORT | 8080;
 app.listen(port, () => {
