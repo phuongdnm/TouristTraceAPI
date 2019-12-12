@@ -1,4 +1,9 @@
-const { create, updateInfoById } = require('./user.service');
+const {
+  create,
+  updateInfoById,
+  getClients,
+  getClientByClientId
+} = require('./user.service');
 const { genSaltSync, hashSync } = require('bcrypt');
 
 const createUser = (req, res) => {
@@ -39,12 +44,47 @@ const updateUserInfo = (req, res) => {
     }
     return res.status(200).json({
       success: true,
-      message: 'Update info'
+      message: 'Update info successfully!'
     });
   });
 };
 
+const getAllClients = (req, res) => {
+  getClients((err, results) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    return res.status(200).json({
+      success: true,
+      data: results
+    });
+  });
+};
+
+const getOneClient = (req, res) => {
+  const id = req.params.id;
+  
+  getClientByClientId(id, (err, results) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    if (!results) {
+      return res.status(401).json({
+        success: false,
+        message: 'Record not found!'
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      data: results
+    });
+  });
+};
 module.exports = {
   createUser,
-  updateUserInfo
+  updateUserInfo,
+  getAllClients,
+  getOneClient
 };

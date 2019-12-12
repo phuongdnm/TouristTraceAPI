@@ -1,0 +1,20 @@
+POST /api/users => create a new user
+  body: {
+    username: "something",
+    password: "something"
+  }
+
+PATCH /api/users => update information of user having id = 1
+  body : {
+    "firstName": "trongson",
+	  "lastName": "nguyen",
+	  "birthday": "2019-03-23",
+	  "city": "Hanoi",
+	  "country": "Vietnam",
+	  "nationality": "Vietnamese",
+	  "email": "trongson@gmail.com",
+	  "phone": "123456",
+	  "id": 1
+  }
+
+GET /api/users => get all users

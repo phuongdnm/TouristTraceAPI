@@ -34,5 +34,25 @@ module.exports = {
         return callBack(null, results);
       }
     );
+  },
+  getClients: callBack => {
+    pool.query(`SELECT * FROM clients`, [], (error, results, fields) => {
+      if (error) {
+        return callBack(error);
+      }
+      return callBack(null, results);
+    });
+  },
+  getClientByClientId: (id, callBack) => {
+    pool.query(
+      `SELECT * FROM clients WHERE client_id=?`,
+      [id],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results[0]);
+      }
+    );
   }
 };
