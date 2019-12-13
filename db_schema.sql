@@ -1,5 +1,6 @@
 DROP DATABASE touristapp;
 CREATE DATABASE touristapp;
+USE touristapp;
 
 CREATE TABLE registration(
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -11,7 +12,7 @@ CREATE TABLE clients(
   client_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   firstName VARCHAR(20) NOT NULL,
   lastName VARCHAR(20) NOT NULL,
-  birthday DATETIME,
+  birthday DATE,
   city VARCHAR(20),
   country VARCHAR(20),
   nationality VARCHAR(20),

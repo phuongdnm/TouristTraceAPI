@@ -1,11 +1,21 @@
-POST /api/users => create a new user
+GET /api/users => get all users (U)
+
+POST /api/users => create a new user (U)
   body: {
-    username: "something",
-    password: "something"
+    "username": "something",
+    "password": "something"
   }
 
-PATCH /api/users => update information of user having id = 1
-  body : {
+POST /api/users/login => log in to access authorized endpoint (U)
+	body: {
+		"username": "phuong",
+		"password": "phuong"
+	}
+
+GET /api/users/:id => get user information with id (A)
+
+PATCH /api/users/:id => update information of user having id = 1 (A)
+  body: {
     "firstName": "trongson",
 	  "lastName": "nguyen",
 	  "birthday": "2019-03-23",
@@ -16,5 +26,3 @@ PATCH /api/users => update information of user having id = 1
 	  "phone": "123456",
 	  "id": 1
   }
-
-GET /api/users => get all users
