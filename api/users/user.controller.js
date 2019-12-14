@@ -100,7 +100,7 @@ const logIn = (req, res) => {
     const checkResult = compareSync(body.password, results.password);
     if (checkResult) {
       results.password = undefined;
-      const jsontoken = sign({ result: results }, 'qwe1234', {
+      const jsontoken = sign({ result: results }, process.env.token_key, {
         expiresIn: '1h'
       });
       return res.status(200).json({
