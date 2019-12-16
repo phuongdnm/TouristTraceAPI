@@ -3,7 +3,8 @@ const {
   updateInfoById,
   getClients,
   getClientByClientId,
-  getClientByUsername
+  getClientByUsername,
+  saveHistory
 } = require('./user.service');
 const { genSaltSync, hashSync, compareSync } = require('bcrypt');
 const { sign } = require('jsonwebtoken');
@@ -117,10 +118,35 @@ const logIn = (req, res) => {
   });
 };
 
+const saveUserHistory = (req, res) => {
+  const userId = req.params.id;
+  const body = req.body;
+
+  // convert array of objects to array of arrays for queries
+  let data_array = [];
+  body.forEach(element => {
+    let item_array = Object.values(element);
+    item_array.push(userId);
+    data_array.push(item_array);
+  });
+
+  saveHistory(data_array, (err, results) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    return res.status(200).json({
+      success: true,
+      data: results
+    });
+  });
+};
+
 module.exports = {
   createUser,
   updateUserInfo,
   getAllClients,
   getOneClient,
-  logIn
+  logIn,
+  saveUserHistory
 };

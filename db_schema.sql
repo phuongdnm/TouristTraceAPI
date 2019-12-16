@@ -31,8 +31,8 @@ CREATE TABLE admins(
 CREATE TABLE newlocations(
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   name VARCHAR(50),
-  latitude DECIMAL(20,10),
-  longitude DECIMAL(20,10),
+  latitude DECIMAL(10,5),
+  longitude DECIMAL(10,5),
   openTime TIME,
   closeTime TIME,
   phone VARCHAR(20),
@@ -56,9 +56,10 @@ CREATE TABLE reviews(
 
 CREATE TABLE history(
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  client_id INT NOT NULL,
-  latitude DECIMAL(20,10),
-  longitude DECIMAL(20,10),
+  client_id INT,
+  latitude DECIMAL(10,5),
+  longitude DECIMAL(10,5),
   arrival_at DATETIME,
-  leave_at DATETIME
+  leave_at DATETIME,
+  FOREIGN KEY (client_id) REFERENCES registration(id)
 );

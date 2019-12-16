@@ -76,10 +76,25 @@ const getClientByUsername = (username, callBack) => {
   );
 }
 
+// Service for saving history
+const saveHistory = (data, callBack) => {
+  pool.query(
+    `INSERT INTO history(latitude, longitude, arrival_at, leave_at, client_id) VALUES ?`, 
+    [data], 
+    (error, results, fields) => {
+      if (error) {
+        return callBack(error);
+      }
+      return callBack(null, results);
+    }
+  )
+}
+
 module.exports = {
   create,
   updateInfoById,
   getClients,
   getClientByClientId,
-  getClientByUsername
+  getClientByUsername,
+  saveHistory
 };
