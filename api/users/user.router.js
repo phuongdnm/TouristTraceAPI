@@ -15,6 +15,6 @@ router.patch('/:id',checkToken, updateUserInfo);
 router.get('/', getAllClients);
 router.get('/:id', checkToken, getOneClient);
 router.post('/login', logIn);
-router.post('/:id/history', saveUserHistory);
+router.post('/:id/history',checkToken, saveUserHistory);
 
 module.exports = router;
