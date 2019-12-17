@@ -90,11 +90,26 @@ const saveHistory = (data, callBack) => {
   )
 }
 
+// Service for getting user's history
+const getHistoryByClientId = (id, callback) => {
+  pool.query(`SELECT latitude, longitude, arrival_at, leave_at FROM history WHERE client_id = ?`,
+  [id],
+  (error, results, fields) => {
+    if (error) {
+      return callback(error);
+    }
+    return callback(null, results);
+  } 
+    
+  )
+}
+
 module.exports = {
   create,
   updateInfoById,
   getClients,
   getClientByClientId,
   getClientByUsername,
-  saveHistory
+  saveHistory,
+  getHistoryByClientId
 };

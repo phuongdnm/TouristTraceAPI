@@ -4,7 +4,8 @@ const {
   getClients,
   getClientByClientId,
   getClientByUsername,
-  saveHistory
+  saveHistory,
+  getHistoryByClientId
 } = require('./user.service');
 const { genSaltSync, hashSync, compareSync } = require('bcrypt');
 const { sign } = require('jsonwebtoken');
@@ -142,11 +143,33 @@ const saveUserHistory = (req, res) => {
   });
 };
 
+const getUserHistory = (req, res) => {
+  const userId = req.params.id;
+
+  getHistoryByClientId(userId, (err, results) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    if (!results) {
+      return res.status(401).json({
+        success: false,
+        message: 'History not found!'
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      data: results
+    });
+  });
+};
+
 module.exports = {
   createUser,
   updateUserInfo,
   getAllClients,
   getOneClient,
   logIn,
-  saveUserHistory
+  saveUserHistory,
+  getUserHistory
 };

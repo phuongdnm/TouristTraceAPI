@@ -4,7 +4,8 @@ const {
   getAllClients,
   getOneClient,
   logIn,
-  saveUserHistory
+  saveUserHistory,
+  getUserHistory
 } = require('./user.controller');
 const { checkToken } = require('../../auth/token_validation');
 
@@ -15,6 +16,7 @@ router.patch('/:id',checkToken, updateUserInfo);
 router.get('/', getAllClients);
 router.get('/:id', checkToken, getOneClient);
 router.post('/login', logIn);
-router.post('/:id/history',checkToken, saveUserHistory);
+router.post('/:id/history', checkToken, saveUserHistory);
+router.get('/:id/history', checkToken, getUserHistory)
 
 module.exports = router;
