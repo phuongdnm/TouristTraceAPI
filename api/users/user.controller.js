@@ -1,5 +1,6 @@
 const {
   create,
+  checkUsername,
   updateInfoById,
   getClients,
   getClientByClientId,
@@ -10,8 +11,27 @@ const {
 const { genSaltSync, hashSync, compareSync } = require('bcrypt');
 const { sign } = require('jsonwebtoken');
 
-const createUser = (req, res) => {
+const checkUniqueUsername = usernameInput => {
+  return new Promise(resolve => {
+    checkUsername(usernameInput, (err, result) => {
+      // If result[0] exist, it means the username is already taken
+      result[0] ? resolve(result[0].username) : resolve(undefined);
+    });
+  });
+};
+
+const createUser = async (req, res) => {
   const body = req.body;
+
+  // check unique username
+  const isNotAvailable = await checkUniqueUsername(body.username);
+  if (isNotAvailable) {
+    return res.status(401).json({
+      success: false,
+      message: 'Your username has been taken!'
+    });
+  } 
+
   // encrypt password
   const salt = genSaltSync(10);
   body.password = hashSync(body.password, salt);
@@ -25,7 +45,7 @@ const createUser = (req, res) => {
     }
     return res.status(200).json({
       success: true,
-      data: results
+      client_id: results[0].insertId
     });
   });
 };

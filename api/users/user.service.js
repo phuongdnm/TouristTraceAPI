@@ -14,6 +14,19 @@ const create = (data, callBack) => {
   );
 }
 
+const checkUsername = (data, callBack) => {
+  pool.query(
+    `SELECT username FROM registration WHERE username = ? LIMIT 1`,
+    [data],
+    (error, results, fields) => {
+      if (error){
+        return callBack(error);
+      }
+      return callBack(null, results);
+    }
+  )
+}
+
 // Service for updating user
 const updateInfoById = (data, callBack) => {
   pool.query(
@@ -106,6 +119,7 @@ const getHistoryByClientId = (id, callback) => {
 
 module.exports = {
   create,
+  checkUsername,
   updateInfoById,
   getClients,
   getClientByClientId,
