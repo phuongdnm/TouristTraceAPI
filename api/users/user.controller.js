@@ -26,7 +26,7 @@ const createUser = async (req, res) => {
   // check unique username
   const isNotAvailable = await checkUniqueUsername(body.username);
   if (isNotAvailable) {
-    return res.status(401).json({
+    return res.status(406).json({
       success: false,
       message: 'Your username has been taken!'
     });
@@ -43,7 +43,7 @@ const createUser = async (req, res) => {
         message: 'Database connection error!'
       });
     }
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
       client_id: results[0].insertId
     });
@@ -61,7 +61,7 @@ const updateUserInfo = (req, res) => {
     if (!results) {
       console.log(results);
       console.log(results);
-      return res.status(401).json({
+      return res.status(404).json({
         success: false,
         message: 'Failed to update user info!'
       });
@@ -95,7 +95,7 @@ const getOneClient = (req, res) => {
       return;
     }
     if (!results) {
-      return res.status(401).json({
+      return res.status(404).json({
         success: false,
         message: 'Record not found!'
       });
@@ -114,7 +114,7 @@ const logIn = (req, res) => {
       console.log(err);
     }
     if (!results) {
-      return res.status(401).json({
+      return res.status(406).json({
         success: false,
         data: 'Invalid email or password!'
       });
@@ -131,7 +131,7 @@ const logIn = (req, res) => {
         token: jsontoken
       });
     } else {
-      return res.status(401).json({
+      return res.status(406).json({
         success: false,
         data: 'Your password is not correct!'
       });
@@ -172,7 +172,7 @@ const getUserHistory = (req, res) => {
       return;
     }
     if (!results) {
-      return res.status(401).json({
+      return res.status(404).json({
         success: false,
         message: 'History not found!'
       });
