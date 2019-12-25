@@ -26,7 +26,7 @@ const createUser = async (req, res) => {
   // check unique username
   const isNotAvailable = await checkUniqueUsername(body.username);
   if (isNotAvailable) {
-    return res.status(406).json({
+    return res.status(401).json({
       success: false,
       message: 'Your username has been taken!'
     });
@@ -123,7 +123,7 @@ const logIn = (req, res) => {
     if (checkResult) {
       results.password = undefined;
       const jsontoken = sign({ result: results }, process.env.token_key, {
-        expiresIn: '1h'
+        expiresIn: '1d'
       });
       return res.status(200).json({
         success: true,
