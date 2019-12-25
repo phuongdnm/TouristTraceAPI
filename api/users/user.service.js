@@ -78,7 +78,11 @@ const getClientByClientId = (id, callBack) => {
 // Service for logging in
 const getClientByUsername = (username, callBack) => {
   pool.query(
-    `SELECT * FROM registration WHERE username=?`,
+    `SELECT *, registration.username, registration.password 
+    FROM clients 
+    INNER JOIN registration 
+    ON registration.id = clients.client_id
+    WHERE username=?`,
     [username],
     (error, results, fields) => {
       if (error) {

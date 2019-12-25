@@ -114,7 +114,7 @@ const logIn = (req, res) => {
       console.log(err);
     }
     if (!results) {
-      return res.status(406).json({
+      return res.status(401).json({
         success: false,
         data: 'Invalid email or password!'
       });
@@ -128,10 +128,21 @@ const logIn = (req, res) => {
       return res.status(200).json({
         success: true,
         message: 'Login successfully!',
-        token: jsontoken
+        token: jsontoken,
+        user: {
+          "id" : results.client_id,
+          "firstName": results.firstName,
+          "lastName": results.lastName,
+          "birthday": results.birthday,
+          "city": results.city,
+          "country": results.country,
+          "nationality": results.nationality,
+          "email": results.email,
+          "phone": results.phone
+        }
       });
     } else {
-      return res.status(406).json({
+      return res.status(401).json({
         success: false,
         data: 'Your password is not correct!'
       });
