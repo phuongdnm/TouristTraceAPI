@@ -30,7 +30,7 @@ const createUser = async (req, res) => {
       success: false,
       message: 'Your username has been taken!'
     });
-  } 
+  }
 
   // encrypt password
   const salt = genSaltSync(10);
@@ -52,7 +52,8 @@ const createUser = async (req, res) => {
 
 const updateUserInfo = (req, res) => {
   const body = req.body;
-  updateInfoById(body, (err, results) => {
+  const id = req.params.id;
+  updateInfoById(body, id, (err, results) => {
     if (err) {
       console.log(err);
       return false;
@@ -66,9 +67,21 @@ const updateUserInfo = (req, res) => {
         message: 'Failed to update user info!'
       });
     }
+    console.log(results[1][0]);
     return res.status(200).json({
       success: true,
-      message: 'Update info successfully!'
+      message: 'Update info successfully!',
+      user: {
+        id: results[1][0].client_id,
+        firstName: results[1][0].firstName,
+        lastName: results[1][0].lastName,
+        birthday: results[1][0].birthday,
+        city: results[1][0].city,
+        country: results[1][0].country,
+        nationality: results[1][0].nationality,
+        email: results[1][0].email,
+        phone: results[1][0].phone
+      }
     });
   });
 };
@@ -130,15 +143,15 @@ const logIn = (req, res) => {
         message: 'Login successfully!',
         token: jsontoken,
         user: {
-          "id" : results.client_id,
-          "firstName": results.firstName,
-          "lastName": results.lastName,
-          "birthday": results.birthday,
-          "city": results.city,
-          "country": results.country,
-          "nationality": results.nationality,
-          "email": results.email,
-          "phone": results.phone
+          id: results.client_id,
+          firstName: results.firstName,
+          lastName: results.lastName,
+          birthday: results.birthday,
+          city: results.city,
+          country: results.country,
+          nationality: results.nationality,
+          email: results.email,
+          phone: results.phone
         }
       });
     } else {

@@ -28,9 +28,9 @@ const checkUsername = (data, callBack) => {
 }
 
 // Service for updating user
-const updateInfoById = (data, callBack) => {
+const updateInfoById = (data, id, callBack) => {
   pool.query(
-    `UPDATE clients SET firstName=?, lastName=?, birthday=?, city=?, country=?, nationality=?, email=?, phone=? WHERE client_id=?`,
+    `UPDATE clients SET firstName=?, lastName=?, birthday=?, city=?, country=?, nationality=?, email=?, phone=? WHERE client_id=?; SELECT * FROM clients WHERE client_id=?`,
     [
       data.firstName,
       data.lastName,
@@ -40,7 +40,8 @@ const updateInfoById = (data, callBack) => {
       data.nationality,
       data.email,
       data.phone,
-      data.id
+      id,
+      id
     ],
     (error, results, fields) => {
       if (error) {
