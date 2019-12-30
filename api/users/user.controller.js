@@ -129,7 +129,7 @@ const logIn = (req, res) => {
     if (!results) {
       return res.status(401).json({
         success: false,
-        data: 'Invalid email or password!'
+        message: 'Invalid email or password!'
       });
     }
     const checkResult = compareSync(body.password, results.password);
@@ -157,7 +157,7 @@ const logIn = (req, res) => {
     } else {
       return res.status(401).json({
         success: false,
-        data: 'Your password is not correct!'
+        message: 'Your password is not correct!'
       });
     }
   });
