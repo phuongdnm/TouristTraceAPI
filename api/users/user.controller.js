@@ -178,10 +178,12 @@ const saveUserHistory = (req, res) => {
   saveHistory(data_array, (err, results) => {
     if (err) {
       console.log(err);
-      return;
+      return res.status(401).json({
+        success: false
+      });
     }
     return res.status(200).json({
-      success: true,
+      success: true
     });
   });
 };
