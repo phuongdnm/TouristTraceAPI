@@ -170,17 +170,22 @@ const saveUserHistory = (req, res) => {
   // convert array of objects to array of arrays for queries
   let data_array = [];
   body.forEach(element => {
-    let item_array = Object.values(element);
-    item_array.push(userId);
-    data_array.push(item_array);
+    // let item_array = Object.values(element);
+    // old code that won't receive (arrival, lat, leave, long)
+    // item_array.push(userId);
+
+    // new code that will receive all order variations
+    let history_values = [];
+    history_values.push(element.latitude, element.longitude, element.arrival_time, element.leave_time, userId);
+
+    // data_array.push(item_array);
+    data_array.push(history_values);
   });
 
   saveHistory(data_array, (err, results) => {
     if (err) {
       console.log(err);
-      return res.status(401).json({
-        success: false
-      });
+      return;
     }
     return res.status(200).json({
       success: true
