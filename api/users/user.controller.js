@@ -67,20 +67,20 @@ const updateUserInfo = (req, res) => {
         message: 'Failed to update user info!'
       });
     }
-    console.log(results[1][0]);
+    const updatedInfo = results[1][0];
     return res.status(200).json({
       success: true,
       message: 'Update info successfully!',
       user: {
-        id: results[1][0].client_id,
-        firstName: results[1][0].firstName,
-        lastName: results[1][0].lastName,
-        birthday: results[1][0].birthday,
-        city: results[1][0].city,
-        country: results[1][0].country,
-        nationality: results[1][0].nationality,
-        email: results[1][0].email,
-        phone: results[1][0].phone
+        id: updatedInfo.client_id,
+        firstName: updatedInfo.firstName,
+        lastName: updatedInfo.lastName,
+        birthday: updatedInfo.birthday,
+        city: updatedInfo.city,
+        country: updatedInfo.country,
+        nationality: updatedInfo.nationality,
+        email: updatedInfo.email,
+        phone: updatedInfo.phone
       }
     });
   });
@@ -94,6 +94,7 @@ const getAllClients = (req, res) => {
     }
     return res.status(200).json({
       success: true,
+      total: results.length,
       data: results
     });
   });
@@ -204,9 +205,9 @@ const getUserHistory = (req, res) => {
         message: 'History not found!'
       });
     }
-    console.log(results);
     return res.status(200).json({
       success: true,
+      total: results.length,
       data: results
     });
   });
