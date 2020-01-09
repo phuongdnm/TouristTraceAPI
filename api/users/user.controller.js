@@ -136,7 +136,7 @@ const logIn = (req, res) => {
     if (checkResult) {
       results.password = undefined;
       const jsontoken = sign({ result: results }, process.env.token_key, {
-        expiresIn: '1d'
+        expiresIn: '7d'
       });
       return res.status(200).json({
         success: true,
@@ -170,13 +170,8 @@ const saveUserHistory = (req, res) => {
   // convert array of objects to array of arrays for queries
   let data_array = [];
   body.forEach(element => {
-    // let item_array = Object.values(element);
-    // old code that won't receive (arrival, lat, leave, long)
-    // item_array.push(userId);
-
-    // new code that will receive all order variations
     let history_values = [];
-    history_values.push(element.latitude, element.longitude, element.arrival_time, element.leave_time, userId);
+    history_values.push(element.latitude, element.longitude, element.arrival_time, userId);
 
     // data_array.push(item_array);
     data_array.push(history_values);
@@ -185,7 +180,9 @@ const saveUserHistory = (req, res) => {
   saveHistory(data_array, (err, results) => {
     if (err) {
       console.log(err);
-      return;
+      return res.status(400).json({
+        success: false
+      });
     }
     return res.status(200).json({
       success: true
@@ -207,6 +204,7 @@ const getUserHistory = (req, res) => {
         message: 'History not found!'
       });
     }
+    console.log(results);
     return res.status(200).json({
       success: true,
       data: results

@@ -97,7 +97,7 @@ const getClientByUsername = (username, callBack) => {
 // Service for saving history
 const saveHistory = (data, callBack) => {
   pool.query(
-    `INSERT INTO history(latitude, longitude, arrival_at, leave_at, client_id) VALUES ?`, 
+    `INSERT INTO history(latitude, longitude, arrival_at, client_id) VALUES ?`, 
     [data], 
     (error, results, fields) => {
       if (error) {
@@ -110,7 +110,7 @@ const saveHistory = (data, callBack) => {
 
 // Service for getting user's history
 const getHistoryByClientId = (id, callback) => {
-  pool.query(`SELECT latitude, longitude, arrival_at, leave_at FROM history WHERE client_id = ?`,
+  pool.query(`SELECT latitude, longitude, arrival_at FROM history WHERE client_id = ?`,
   [id],
   (error, results, fields) => {
     if (error) {

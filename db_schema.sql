@@ -60,6 +60,5 @@ CREATE TABLE history(
   latitude DECIMAL(10,5),
   longitude DECIMAL(10,5),
   arrival_at DATETIME,
-  leave_at DATETIME,
   FOREIGN KEY (client_id) REFERENCES registration(id)
 );
