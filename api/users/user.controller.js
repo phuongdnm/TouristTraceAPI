@@ -61,7 +61,6 @@ const updateUserInfo = (req, res) => {
     // If the results object is undefined
     if (!results) {
       console.log(results);
-      console.log(results);
       return res.status(404).json({
         success: false,
         message: 'Failed to update user info!'
@@ -172,7 +171,7 @@ const saveUserHistory = (req, res) => {
   let data_array = [];
   body.forEach(element => {
     let history_values = [];
-    history_values.push(element.latitude, element.longitude, element.arrival_time, userId);
+    history_values.push(element.latitude, element.longitude, element.arrival_at, userId);
 
     // data_array.push(item_array);
     data_array.push(history_values);
