@@ -178,11 +178,13 @@ const adminLogin = (req, res) => {
     }
     if (body.password == results.password && body.name == results.name) {
       return res.status(200).json({
-        success: true
+        success: true,
+        message: "Admin login successfully!"
       })
     } else {
       return res.status(401).json({
-        success: false
+        success: false,
+        message: "Failed to login!"
       })
     }
   });

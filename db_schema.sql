@@ -4,28 +4,28 @@ USE touristapp;
 
 CREATE TABLE registration(
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(20) NOT NULL,
+  username VARCHAR(50) NOT NULL,
   password VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE clients(
   client_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  firstName VARCHAR(20) NOT NULL,
-  lastName VARCHAR(20) NOT NULL,
+  firstName VARCHAR(50) NOT NULL,
+  lastName VARCHAR(50) NOT NULL,
   birthday DATE,
-  city VARCHAR(20),
-  country VARCHAR(20),
-  nationality VARCHAR(20),
-  email VARCHAR(20),
-  phone VARCHAR(20),
+  city VARCHAR(50),
+  country VARCHAR(50),
+  nationality VARCHAR(50),
+  email VARCHAR(50),
+  phone VARCHAR(50),
   FOREIGN KEY (client_id) REFERENCES registration(id)
 );
 
 CREATE TABLE admins(
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  username VARCHAR(20) NOT NULL,
+  username VARCHAR(50) NOT NULL,
   password VARCHAR(100) NOT NULL,
-  name VARCHAR(20) NOT NULL
+  name VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE newlocations(
@@ -35,7 +35,7 @@ CREATE TABLE newlocations(
   longitude DECIMAL(10,5),
   openTime TIME,
   closeTime TIME,
-  phone VARCHAR(20),
+  phone VARCHAR(50),
   email VARCHAR(50),
   type VARCHAR(20),
   rating DECIMAL(3,2),
