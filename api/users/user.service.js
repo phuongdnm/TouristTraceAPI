@@ -12,20 +12,20 @@ const create = (data, callBack) => {
       return callBack(null, results);
     }
   );
-}
+};
 
 const checkUsername = (data, callBack) => {
   pool.query(
     `SELECT username FROM registration WHERE username = ? LIMIT 1`,
     [data],
     (error, results, fields) => {
-      if (error){
+      if (error) {
         return callBack(error);
       }
       return callBack(null, results);
     }
-  )
-}
+  );
+};
 
 // Service for updating user
 const updateInfoById = (data, id, callBack) => {
@@ -50,17 +50,17 @@ const updateInfoById = (data, id, callBack) => {
       return callBack(null, results);
     }
   );
-}
+};
 
 // Service for get all clients
-const getClients =  callBack => {
+const getClients = callBack => {
   pool.query(`SELECT * FROM clients`, [], (error, results, fields) => {
     if (error) {
       return callBack(error);
     }
     return callBack(null, results);
   });
-}
+};
 
 // Service for get infor of 1 client
 const getClientByClientId = (id, callBack) => {
@@ -74,7 +74,7 @@ const getClientByClientId = (id, callBack) => {
       return callBack(null, results[0]);
     }
   );
-}
+};
 
 // Service for logging in
 const getClientByUsername = (username, callBack) => {
@@ -92,35 +92,49 @@ const getClientByUsername = (username, callBack) => {
       return callBack(null, results[0]);
     }
   );
-}
+};
+
+// Service for admin
+const getAdminByUsername = (username, callBack) => {
+  pool.query(
+    `SELECT * FROM admins WHERE username =?`,
+    [username],
+    (error, results, fields) => {
+      if (error) {
+        return callBack(error);
+      }
+      return callBack(null, results[0]);
+    }
+  );
+};
 
 // Service for saving history
 const saveHistory = (data, callBack) => {
   pool.query(
-    `INSERT INTO history(latitude, longitude, arrival_at, client_id) VALUES ?`, 
-    [data], 
+    `INSERT INTO history(latitude, longitude, arrival_at, client_id) VALUES ?`,
+    [data],
     (error, results, fields) => {
       if (error) {
         return callBack(error);
       }
       return callBack(null, results);
     }
-  )
-}
+  );
+};
 
 // Service for getting user's history
 const getHistoryByClientId = (id, callback) => {
-  pool.query(`SELECT latitude, longitude, arrival_at FROM history WHERE client_id = ?`,
-  [id],
-  (error, results, fields) => {
-    if (error) {
-      return callback(error);
+  pool.query(
+    `SELECT latitude, longitude, arrival_at FROM history WHERE client_id = ?`,
+    [id],
+    (error, results, fields) => {
+      if (error) {
+        return callback(error);
+      }
+      return callback(null, results);
     }
-    return callback(null, results);
-  } 
-    
-  )
-}
+  );
+};
 
 module.exports = {
   create,
@@ -129,6 +143,7 @@ module.exports = {
   getClients,
   getClientByClientId,
   getClientByUsername,
+  getAdminByUsername,
   saveHistory,
   getHistoryByClientId
 };

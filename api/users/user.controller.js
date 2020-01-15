@@ -5,6 +5,7 @@ const {
   getClients,
   getClientByClientId,
   getClientByUsername,
+  getAdminByUsername,
   saveHistory,
   getHistoryByClientId
 } = require('./user.service');
@@ -163,6 +164,31 @@ const logIn = (req, res) => {
   });
 };
 
+const adminLogin = (req, res) => {
+  const body = req.body;
+  getAdminByUsername(body.username, (err, results) => {
+    if (err) {
+      console.log(err);
+    }
+    if (!results) {
+      return res.status(404).json({
+        success: false,
+        message: 'Invalid username or password!'
+      })
+    }
+    if (body.password == results.password && body.name == results.name) {
+      return res.status(200).json({
+        success: true
+      })
+    } else {
+      return res.status(401).json({
+        success: false
+      })
+    }
+  });
+
+}
+
 const saveUserHistory = (req, res) => {
   const userId = req.params.id;
   const body = req.body;
@@ -218,6 +244,7 @@ module.exports = {
   getAllClients,
   getOneClient,
   logIn,
+  adminLogin,
   saveUserHistory,
   getUserHistory
 };

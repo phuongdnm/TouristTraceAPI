@@ -4,6 +4,7 @@ const {
   getAllClients,
   getOneClient,
   logIn,
+  adminLogin,
   saveUserHistory,
   getUserHistory
 } = require('./user.controller');
@@ -16,6 +17,7 @@ router.put('/:id',checkToken, updateUserInfo);
 router.get('/', getAllClients);
 router.get('/:id', checkToken, getOneClient);
 router.post('/login', logIn);
+router.post('/admin', adminLogin);
 router.post('/:id/history', checkToken, saveUserHistory);
 router.get('/:id/history', checkToken, getUserHistory)
 
